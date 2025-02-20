@@ -1,0 +1,19 @@
+# Node modules
+node_modules/
+
+# Parcel cache
+.cache/
+.parcel-cache/
+
+# Dist folder
+dist/
+
+# TypeScript build artifacts
+*.tsbuildinfo
+
+# Logs
+logs/
+*.log
+
+# Environment variables
+.env
