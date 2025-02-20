@@ -12,8 +12,8 @@ export class ManualController extends Controller {
    * @param robot Instance of the robot to be controlled.
    * @param forceMagnitude Magnitude of the force to be applied on key press.
    */
-  constructor(robot: Robot, forceMagnitude: number = 0.005) {
-    super(robot);
+  constructor(robot: Robot, frequency: number,forceMagnitude: number = 0.005) {
+    super(robot,frequency);
     this.forceMagnitude = forceMagnitude;
     this.init();
   }

@@ -1,0 +1,19 @@
+/* Estilos básicos */
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #ecf0f1;
+}
+#simulation-container {
+  width: 800px;
+  height: 600px;
+  border: 1px solid #bdc3c7;
+}
+#control-panel {
+  margin-top: 10px;
+}

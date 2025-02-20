@@ -34,6 +34,7 @@ export class Pendulum {
         },
       }
     );
+    
 
     // Cria a restrição (a "haste" que conecta o carrinho ao peso)
     this.constraint = Constraint.create({

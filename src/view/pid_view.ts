@@ -1,8 +1,8 @@
-import { PIDController } from "./controllers/pid/pid_controller";
-import { PositionPIDController } from "./controllers/pid/position_controller";
-import { Ground } from "./simulation/ground";
-import { Robot } from "./simulation/robot";
-import { Simulator } from "./simulation/simulator";
+import { PIDController } from "../controllers/pid/pid_controller";
+import { PositionPIDController } from "../controllers/pid/position_controller";
+import { Ground } from "../simulation/ground";
+import { Robot } from "../simulation/robot";
+import { Simulator } from "../simulation/simulator";
 
 /**
  * Main script that initializes and starts the simulation.
@@ -33,8 +33,8 @@ window.addEventListener('DOMContentLoaded', () => {
   // Inicializa os controladores:
   // O PIDController controla o ângulo e o PositionPIDController controla a posição,
   // enviando o targetAngle desejado para o PIDController.
-  const angleController = new PIDController(robot, 0.9, 0.0001, 0.01, 0);
-  const positionController = new PositionPIDController(robot, angleController, 200, -0.1, 0.1, 0.001, 0, 0);
+  const angleController = new PIDController(robot,50, 0.09, 0.0001, 0.01, 0.0);
+  const positionController = new PositionPIDController(robot,50, angleController, 200, -0.08, 0.08, 0.0001, 0, 0);
 
   // Configuração da interface para alterar a targetPosition
   const targetInput = document.getElementById('target-position') as HTMLInputElement;

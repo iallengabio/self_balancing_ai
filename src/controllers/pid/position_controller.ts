@@ -29,6 +29,7 @@ export class PositionPIDController extends Controller {
    */
   constructor(
     robot: Robot,
+    frequency: number,
     angleController: PIDController,
     targetPosition: number = 0,
     minAngle:number = 0,
@@ -37,7 +38,7 @@ export class PositionPIDController extends Controller {
     Ki: number = 0.0001,
     Kd: number = 0.001
   ) {
-    super(robot);
+    super(robot, frequency);
     this.pid = new PID(Kp, Ki, Kd);
     this.minAngle = minAngle;
     this.maxAngle = maxAngle;
@@ -51,18 +52,17 @@ export class PositionPIDController extends Controller {
    */
   public init(): void {
     this.lastTimestamp = performance.now();
-    requestAnimationFrame(this.controlLoop.bind(this));
+    setInterval(this.update.bind(this), 1000 / this.frequency);
   }
 
   /**
-   * The main control loop that updates the controller at each animation frame.
-   * @param timestamp The current timestamp.
+   * The main control loop that updates the controller at each interval.
    */
-  private controlLoop(timestamp: number): void {
+  public update(): void {
+    const timestamp = performance.now();
     const dt = (timestamp - (this.lastTimestamp ?? timestamp)) / 1000; // Delta time in seconds
     this.lastTimestamp = timestamp;
-    this.update(dt);
-    requestAnimationFrame(this.controlLoop.bind(this));
+    this.updatePID(dt);
   }
 
   /**
@@ -73,10 +73,11 @@ export class PositionPIDController extends Controller {
    * - Passes the targetAngle to the angle controller (angleController).
    * @param dt Delta time in seconds.
    */
-  public update(dt: number): void {
+  public updatePID(dt: number): void {
     // Current horizontal position of the cart.
     const currentPosition = this.robot.cart.body.position.x;
     const positionError = this.targetPosition - currentPosition;
+    //console.log(positionError);
 
     // The position PID generates an output that we interpret as targetAngle.
     const output = this.pid.update(positionError, dt);

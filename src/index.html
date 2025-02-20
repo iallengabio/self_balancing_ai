@@ -3,35 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <title>Self-Balancing AI</title>
-    <style>
-      /* Estilos básicos */
-      body {
-        margin: 0;
-        padding: 0;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        background: #ecf0f1;
-      }
-      #simulation-container {
-        width: 800px;
-        height: 600px;
-        border: 1px solid #bdc3c7;
-      }
-      #control-panel {
-        margin-top: 10px;
-      }
-    </style>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   </head>
-  <body>
-    <div id="simulation-container"></div>
-    <div id="control-panel">
-      <input type="number" id="target-position" placeholder="Target Position" />
-      <button id="set-target">Set Target Position</button>
+  <body class="bg-gray-100 text-center p-10">
+    <h1 class="text-4xl font-bold mb-6">Projeto de Robô Auto-Equilibrante com IA</h1>
+    <p class="mb-6">Este projeto é uma ferramenta educacional projetada para ser usada em várias disciplinas, como física, algoritmos, inteligência artificial e mais. Ele foca na implementação de controladores para um robô auto-equilibrante, também conhecido como pêndulo invertido. O projeto inclui implementações de controladores PID e controladores baseados em redes neurais. Encorajamos a criação de novos controladores, que podem ser submetidos como contribuições para o projeto.</p>
+    <div class="space-x-4">
+      <a href="./view/pid.html" class="bg-blue-500 text-white px-4 py-2 rounded">Controlador PID</a>
+      <a href="./view/neural_network.html" class="bg-green-500 text-white px-4 py-2 rounded">Controle por Rede Neural</a>
     </div>
-    <!-- O Parcel irá compilar o TypeScript, então indicamos o módulo -->
-    <script type="module" src="./index.ts"></script>
   </body>
 </html>

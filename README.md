@@ -9,6 +9,7 @@ Este projeto é uma ferramenta educacional projetada para ser usada em várias d
 - **TypeScript**: A linguagem de programação principal usada no projeto.
 - **Controladores PID**: Implementações de controladores Proporcional-Integral-Derivativo para equilibrar o robô.
 - **Redes Neurais**: Implementações de controladores baseados em redes neurais para equilibrar o robô.
+- **Algoritmo Evolutivo**: Implementações de controladores baseados em redes neurais com algoritmo evolutivo.
 - **Contexto Educacional**: O projeto é projetado para ser uma ferramenta de aprendizado para várias disciplinas.
 
 ## Estrutura do Projeto
@@ -17,6 +18,7 @@ Este projeto é uma ferramenta educacional projetada para ser usada em várias d
 - `controllers/`: Contém as implementações de diferentes controladores.
   - `pid/`: Implementações de controladores PID.
   - `neural_network/`: Implementações de controladores baseados em redes neurais.
+  - `evolutionary_algorithm/`: Implementações de controladores baseados em redes neurais com algoritmo evolutivo.
 
 ## Dependências do Projeto
 

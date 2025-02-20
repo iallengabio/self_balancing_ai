@@ -8,6 +8,7 @@ import { PID } from "./pid";
  * and applies the resulting force to the cart.
  */
 export class PIDController extends Controller {
+  
   private pid: PID;
   private lastTimestamp: number | null = null;
   private targetAngle : number;
@@ -21,12 +22,13 @@ export class PIDController extends Controller {
    */
   constructor(
     robot: Robot,
+    frequency: number,
     Kp: number = 0.05,
     Ki: number = 0.0001,
     Kd: number = 0.01,
     targetAngle : number = 0
   ) {
-    super(robot);
+    super(robot, frequency);
     this.pid = new PID(Kp, Ki, Kd);
     this.targetAngle = targetAngle;
     this.init();
@@ -37,18 +39,17 @@ export class PIDController extends Controller {
    */
   public init(): void {
     this.lastTimestamp = performance.now();
-    requestAnimationFrame(this.controlLoop.bind(this));
+    setInterval(this.update.bind(this), 1000 / this.frequency);
   }
 
   /**
-   * The main control loop that updates the controller at each animation frame.
-   * @param timestamp The current timestamp.
+   * The main control loop that updates the controller at each interval.
    */
-  private controlLoop(timestamp: number): void {
-    const dt = (timestamp - (this.lastTimestamp ?? timestamp)) / 1000; // Delta time em segundos
+  public update(): void {
+    const timestamp = performance.now();
+    const dt = (timestamp - (this.lastTimestamp ?? timestamp)) / 1000; // Delta time in seconds
     this.lastTimestamp = timestamp;
-    this.update(dt);
-    requestAnimationFrame(this.controlLoop.bind(this));
+    this.updatePID(dt);
   }
 
   /**
@@ -56,7 +57,8 @@ export class PIDController extends Controller {
    * and applies the resulting force to the cart.
    * @param dt Delta time in seconds.
    */
-  public update(dt: number): void {
+  public updatePID(dt: number): void {
+    //console.log(dt);
     // Calcula o ângulo atual do pêndulo (em radianos) com base na diferença de posição entre o peso e o carrinho.
     const cartPos = this.robot.cart.body.position;
     const pendulumPos = this.robot.pendulum.weight.position;
@@ -67,6 +69,7 @@ export class PIDController extends Controller {
 
     // O setpoint é zero (vertical), portanto o erro é igual ao ângulo
     const error = angle - this.targetAngle;
+    //console.log(error);
 
     // Calcula a saída PID utilizando a classe auxiliar PID
     const output = this.pid.update(error, dt);

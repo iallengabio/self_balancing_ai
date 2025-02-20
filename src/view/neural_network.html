@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Controle por Rede Neural</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  </head>
+  <body class="bg-gray-100 text-center p-10">
+    <h1 class="text-4xl font-bold mb-6">Controle por Rede Neural</h1>
+    <div id="simulation-container" class="mb-6"></div>
+    <div id="control-panel" class="space-y-4">
+      <input type="number" id="target-position" placeholder="Target Position" class="border p-2 rounded" />
+      <button id="set-target" class="bg-green-500 text-white px-4 py-2 rounded">Set Target Position</button>
+    </div>
+    <!-- O Parcel irá compilar o TypeScript, então indicamos o módulo -->
+    <script type="module" src="./neural_view.ts"></script>
+  </body>
+</html>
