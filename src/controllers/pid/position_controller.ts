@@ -44,15 +44,6 @@ export class PositionPIDController extends Controller {
     this.maxAngle = maxAngle;
     this.targetPosition = targetPosition;
     this.angleController = angleController;
-    this.init();
-  }
-
-  /**
-   * Initializes the controller by setting the last timestamp and starting the control loop.
-   */
-  public init(): void {
-    this.lastTimestamp = performance.now();
-    setInterval(this.update.bind(this), 1000 / this.frequency);
   }
 
   /**
@@ -74,6 +65,7 @@ export class PositionPIDController extends Controller {
    * @param dt Delta time in seconds.
    */
   public updatePID(dt: number): void {
+    if(dt==0) return;
     // Current horizontal position of the cart.
     const currentPosition = this.robot.cart.body.position.x;
     const positionError = this.targetPosition - currentPosition;

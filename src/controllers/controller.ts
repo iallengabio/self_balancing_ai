@@ -18,11 +18,6 @@ export abstract class Controller {
   }
 
   /**
-   * Method to initialize the controller, such as setting up event listeners or variables.
-   */
-  public abstract init(): void;
-
-  /**
    * Method to start the automatic update calls at the specified frequency.
    */
   public start(): void {

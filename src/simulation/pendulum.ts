@@ -32,6 +32,10 @@ export class Pendulum {
         render: {
           fillStyle: '#e74c3c',
         },
+        collisionFilter: {
+          group: -1 // Define um grupo negativo para evitar colisões com outros corpos do mesmo grupo
+        },
+        label:'head'
       }
     );
     

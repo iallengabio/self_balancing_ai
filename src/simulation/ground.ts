@@ -12,6 +12,7 @@ export class Ground {
             render: {
                 fillStyle: '#2ecc71', // Color to differentiate the ground
             },
+            label:'ground'
         });
     }
 }

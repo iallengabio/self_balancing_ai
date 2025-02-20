@@ -1,4 +1,5 @@
 import { Bodies, Body } from 'matter-js';
+import { getRandomColor } from './util';
 
 /**
  * The Cart class represents a cart in the simulation.
@@ -20,8 +21,12 @@ export class Cart {
             frictionAir: 0.0,    // Remove air friction (if desired)
             restitution: 0.0,
             render: {
-                fillStyle: '#2e86de',
+                fillStyle: getRandomColor(),
             },
+            collisionFilter: {
+                group: -1 // Define um grupo negativo para evitar colisões com outros corpos do mesmo grupo
+            },
+            label: 'cart'
         });
     }
 }
