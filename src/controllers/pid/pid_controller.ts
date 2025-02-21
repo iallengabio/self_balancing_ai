@@ -12,6 +12,8 @@ export class PIDController extends Controller {
   private pid: PID;
   private lastTimestamp: number | null = null;
   private targetAngle: number;
+  private maxForce : number = 0;
+  private minForce : number = 0;
 
   /**
    * @param robot Instance of the robot to be controlled.
@@ -69,6 +71,14 @@ export class PIDController extends Controller {
 
     // Aplica a força resultante ao carrinho
     this.robot.applyForce(output);
+    if(output>this.maxForce){
+      this.maxForce = output;
+      console.log(`maxForce: ${this.maxForce}`);
+    }
+    if(output<this.minForce){
+      this.minForce = output;
+      console.log(`minForce: ${this.minForce}`);
+    }
 
   }
 

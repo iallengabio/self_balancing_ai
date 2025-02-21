@@ -1,4 +1,4 @@
-import { Body, Bodies, Constraint } from 'matter-js';
+import { Body, Bodies, Constraint, Events } from 'matter-js';
 
 /**
  * Represents a pendulum connected to a cart body.

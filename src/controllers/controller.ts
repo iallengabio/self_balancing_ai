@@ -30,6 +30,7 @@ export abstract class Controller {
    * Method to stop the automatic update calls.
    */
   public stop(): void {
+    //console.log('stop controller');
     if (this.intervalId !== null) {
       window.clearInterval(this.intervalId);
       this.intervalId = null;

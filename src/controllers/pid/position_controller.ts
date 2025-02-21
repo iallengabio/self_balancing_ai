@@ -16,6 +16,8 @@ export class PositionPIDController extends Controller {
   private angleController: PIDController;
   private minAngle;
   private maxAngle;
+  private maxVelocity = 0;
+  private minVelocity = 0;
 
   /**
    * @param robot Instance of the robot to be controlled.
@@ -50,6 +52,15 @@ export class PositionPIDController extends Controller {
    * The main control loop that updates the controller at each interval.
    */
   public update(): void {
+    // if(this.robot.cart.body.velocity.x>this.maxVelocity){
+    //   this.maxVelocity = this.robot.cart.body.velocity.x;
+    //   console.log(`maxVel: ${this.maxVelocity}`);
+    // }
+    // if(this.robot.cart.body.velocity.x<this.minVelocity){
+    //   this.minVelocity = this.robot.cart.body.velocity.x;
+    //   console.log(`minVel: ${this.minVelocity}`);
+    // }
+    
     const timestamp = performance.now();
     const dt = (timestamp - (this.lastTimestamp ?? timestamp)) / 1000; // Delta time in seconds
     this.lastTimestamp = timestamp;
@@ -88,5 +99,15 @@ export class PositionPIDController extends Controller {
    */
   public setTargetPosition(targetPosition: number): void {
     this.targetPosition = targetPosition;
+  }
+
+  public start(): void {
+      super.start();
+      this.angleController.start();
+  }
+
+  public stop(): void {
+      super.stop();
+      this.angleController.stop();
   }
 }

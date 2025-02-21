@@ -1,4 +1,4 @@
-import { Engine, Render, Runner, World } from 'matter-js';
+import { Engine, Render, Runner, World, Events } from 'matter-js';
 import { Ground } from './ground';
 import { Robot } from './robot';
 import { Boundary } from './boundary';
@@ -25,12 +25,13 @@ export class Simulator {
       options: {
         width: 800,
         height: 600,
-        wireframes: false, // Non-wireframe mode for better visualization
+        wireframes: false,
         background: '#fafafa',
       },
     });
     this.runner = Runner.create();
 
+    // Adiciona o chão
     const ground = new Ground(400, 590, 800, 20);
     this.addBody(ground.body);
 
@@ -40,6 +41,32 @@ export class Simulator {
     this.addBody(leftWall.body);
     this.addBody(rightWall.body);
 
+    // Registra o monitor de colisões para identificar quedas individuais
+    Events.on(this.engine, 'collisionStart', (event) => {
+      event.pairs.forEach(pair => {
+        // Verifica ambos os corpos da colisão
+        [pair.bodyA, pair.bodyB].forEach(body => {
+          // Se o corpo tiver um plugin.robot, ele faz parte de um robô
+          if (body.plugin && body.plugin.robot) {
+            // O outro corpo na colisão
+            const otherBody = body === pair.bodyA ? pair.bodyB : pair.bodyA;
+            // Se o outro corpo for o chão ou uma parede
+            if (
+              otherBody.label === 'ground' ||
+              (typeof otherBody.label === 'string' && otherBody.label.startsWith('boundary'))
+            ) {
+              const robot: Robot = body.plugin.robot;
+              if (!robot.isFallen) {
+                robot.isFallen = true;
+                if (robot.onFall) {
+                  robot.onFall();
+                }
+              }
+            }
+          }
+        });
+      });
+    });
   }
 
   /**
@@ -48,6 +75,16 @@ export class Simulator {
    */
   private addBody(body: any) {
     World.add(this.engine.world, body);
+  }
+
+  /**
+   * Removes a robot from the simulation world.
+   * @param robot - The robot to remove from the world.
+   */
+  public removeRobot(robot: Robot) {
+    World.remove(this.engine.world, robot.cart.body);
+    World.remove(this.engine.world, robot.pendulum.weight);
+    World.remove(this.engine.world, robot.pendulum.constraint);
   }
 
   public addRobot(robot: Robot) {

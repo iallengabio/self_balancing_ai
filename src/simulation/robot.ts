@@ -10,6 +10,8 @@ import { Pendulum } from './pendulum';
 export class Robot {
   cart: Cart;
   pendulum: Pendulum;
+  isFallen: boolean = false; // flag para indicar se o robô já caiu
+  onFall?: () => void;       // callback que será chamada quando o robô cair
 
   /**
    * Creates an instance of Robot.
@@ -29,7 +31,11 @@ export class Robot {
     pendulumMass: number
   ) {
     this.cart = new Cart(x, y, cartWidth, cartHeight);
+    
     this.pendulum = new Pendulum(this.cart.body, pendulumLength, pendulumMass);
+    // Associa o robô aos corpos para facilitar a identificação nas colisões
+    //this.cart.body.plugin = { robot: this };
+    this.pendulum.weight.plugin = { robot: this };
   }
 
   /**
@@ -38,6 +44,7 @@ export class Robot {
    */
   applyForce(force: number) {
     Body.applyForce(this.cart.body, this.cart.body.position, { x: force, y: 0 });
+    //console.log(`force: ${force}`);
   }
 
   /**
